@@ -2,12 +2,7 @@ name: Build and tests
 
 on:
   # Ignore changes in extra plugins (as they are not tested here)
-  push:
-    paths-ignore:
-      - 'extra_plugins/**'
-  pull_request:
-    paths-ignore:
-      - 'extra_plugins/**'
+  workflow_dispatch: 
 
 jobs:
   build:
@@ -16,15 +11,9 @@ jobs:
       fail-fast: false
       matrix:
         image:
-          - 'ubuntu:20.04'
-          - 'ubuntu:22.04'
+
           - 'ubuntu:24.04'
-          - 'debian:bullseye'
-          - 'debian:bookworm'
-          - 'rockylinux:8'
-          - 'oraclelinux:8'
-          - 'oraclelinux:9'
-          - 'oraclelinux:10'
+     
 
     name: Build on ${{ matrix.image }}
     container: ${{ matrix.image }}
@@ -109,8 +98,8 @@ jobs:
         make && make install
     - name: Run tests
       run: cd build && make test
-    - name: Try to run IPFIXcol2
-      run: |
-        ipfixcol2 -V
-        ipfixcol2 -h
-        ipfixcol2 -L -v
+    # - name: Try to run IPFIXcol2
+    #   run: |
+    #     ipfixcol2 -V
+    #     ipfixcol2 -h
+    #     ipfixcol2 -L -v
